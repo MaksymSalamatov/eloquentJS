@@ -11,27 +11,27 @@
 // 7, 9]. Make sure it also works with negative step values so that range(5, 2, -1)
 // produces [5, 4, 3, 2].
 
-function range(start, end, step = start < end ? 1 : -1) {
-    let arr = []
-    if(start < end) {
-        for (let i = start; i <= end; i += step){
-            arr.push(i)
-        }
-    } else {
-        for (let i = start; i >= end; i += step){
-            arr.push(i)
-        }
-    }
-    return arr
-}
-
-function sum(arr){
-    return arr.reduce((acc, i) => acc += i)
-}
-
-console.log(range(1, 10))
-console.log(range(10, 1))
-console.log(sum(range(1, 10)))
+// function range(start, end, step = start < end ? 1 : -1) {
+//     let arr = []
+//     if(start < end) {
+//         for (let i = start; i <= end; i += step){
+//             arr.push(i)
+//         }
+//     } else {
+//         for (let i = start; i >= end; i += step){
+//             arr.push(i)
+//         }
+//     }
+//     return arr
+// }
+//
+// function sum(arr){
+//     return arr.reduce((acc, i) => acc += i)
+// }
+//
+// console.log(range(1, 10))
+// console.log(range(10, 1))
+// console.log(sum(range(1, 10)))
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -65,5 +65,35 @@ console.log(sum(range(1, 10)))
 // to the first element) or undefined when there is no such element.
 // If you haven’t already, also write a recursive version of nth.
 
+function arrayToList(args) {
+    let list = null
+    for(let i = args.length - 1; i >= 0; i--) {
+        list = {value: args[i], rest: list}
+    }
+    return list
+}
+console.log(arrayToList([10, 20, 30]))
 
+function listToArray(list) {
+    let listArray = []
+    for (let node = list; node; node = node.rest) {
+        listArray.push(node.value)
+    }
+    return listArray
+}
 
+console.log(listToArray(arrayToList([1, 2, 3])))
+
+function prepend(value, list) {
+    return {value, rest: list}
+}
+
+console.log(prepend(10, prepend(20, null)))
+
+function nth(list, n){
+    if(!list) return undefined;
+    else if(n === 0) return list.value;
+    else return nth(list.rest, n - 1);
+}
+
+console.log(nth(arrayToList([10, 20, 30]), 0))
